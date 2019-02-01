@@ -1,0 +1,94 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Suggestion
+{% endblock %}
+
+{% block main %}
+
+
+
+<div id="map" height= "555px" width= "100%"></div>
+
+<form action="/suggestion" method="post" id="form">
+    <table>
+        <tr>
+            <td>
+                <div class="form-group">
+                    <input autocomplete ="off" class="form-control" name="what" placeholder="What is there" type="text"/>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="form-group">
+                    <input autocomplete ="off" class="form-control" name="why" placeholder="What did you like about it" type="text"/>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="form-group">
+                    <input autocomplete ="off" class="form-control" name="history" placeholder="Would you go there again" type="text"/>
+                </div>
+            </td>
+       </tr>
+        <tr>
+            <td>
+                <button class="btn btn-primary" type="submit" onclick="saveLocation()">Save</button>
+            </td
+        ></tr>
+    </table>
+    <input type="hidden" name="lat1" id="lat1">
+    <input type="hidden" name="lng1" id="lng1">
+</form>
+
+<script>
+    var map;
+    var marker;
+    var infowindow;
+    var messagewindow;
+
+    function initMap() {
+        var california = {lat: 27.4419, lng: 42.1419};
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: california,
+          zoom: 2
+        });
+
+        infowindow = new google.maps.InfoWindow({
+            content: document.getElementById("form")
+        });
+
+        messagewindow = new google.maps.InfoWindow({
+            content: document.getElementById("message")
+        });
+
+        google.maps.event.addListener(map, 'click', function(event) {
+            marker = new google.maps.Marker({
+                position: event.latLng,
+                map: map
+            });
+
+        google.maps.event.addListener(marker, "click", function() {
+            infowindow.open(map, marker);
+        });
+      });
+    }
+
+          function saveLocation () {
+
+              var latlng = marker.getPosition();
+              var lat = latlng.lat();
+              var lng = latlng.lng()
+              document.getElementById("lat1").value = lat
+              document.getElementById("lng1").value = lng
+      }
+
+
+</script>
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCQl_vN8s8JxN3muPxqcGY6qpwmtDQr5vU&callback=initMap">
+</script>
+
+{% endblock %}

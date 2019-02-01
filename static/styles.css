@@ -1,0 +1,15 @@
+body {
+  background-color: #141414;
+}
+
+@font-face {
+    font-family: 'vollkorn';
+    src: url("./font/Vollkorn-Black.eot");
+}
+html, body {
+    font-family: 'vollkorn', sans-serif; /*Specify your font name here*/
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+}
+
+preload{ display: none; }
