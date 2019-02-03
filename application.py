@@ -49,8 +49,7 @@ def suggestion():
 
 
         cur = conn.cursor()
-        sql = "SELECT what, why, lat, lng, history FROM markers"
-        cur.execute(sql)
+        cur.execute("SELECT what, why, lat, lng, history FROM markers")
         data = cur.fetchall()
 
         with open("data4.csv", "w", newline="") as f_handle:
