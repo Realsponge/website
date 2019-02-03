@@ -5,3 +5,5 @@ body {
 .ml-1 {
   margin-left: ($spacer * .25) !important;
 }
+
+font-family: 'Vollkorn', serif;

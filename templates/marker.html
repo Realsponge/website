@@ -3,11 +3,6 @@
 
 {% block head %}
 
-
-
-
-
-
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
     <title>Suggestion</title>
@@ -15,20 +10,28 @@
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
       #map {
-        height: 100%;
+        height: 90%;
+        width: 90%;
+
       }
       /* Optional: Makes the sample page fill the window. */
       html, body {
         height: 100%;
-        margin: 0;
-        padding: 0;
+        width: 100%;
+        margin: 50;
+        padding: 10;
       }
     </style>
 {% endblock %}
 
 {% block main %}
 
-    <div id="map"></div>
+
+    <div id="map" class="container-fluid p-5"></div>
+
+
+
+
 
 <form action="/suggestion" method="post" id="form">
     <table>
@@ -78,8 +81,10 @@
 
         function initMap() {
         var map = new google.maps.Map(document.getElementById('map'), {
-          center: new google.maps.LatLng(-33.863276, 151.207977),
-          zoom: 2
+          center: new google.maps.LatLng(23.863276, 40.207977),
+          zoom: 3,
+          gestureHandling: 'greedy',
+
         });
         var infoWindow = new google.maps.InfoWindow;
 

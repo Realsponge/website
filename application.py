@@ -9,7 +9,7 @@ from flask import Flask, flash, redirect, render_template, request, session, url
 from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions
-from werkzeug.security import check_password_hash, generate_password_hash
+
 
 app = Flask(__name__)
 
@@ -68,22 +68,22 @@ def suggestion():
     else:
         return render_template("marker.html")
 
-@app.route("/japan.html")
+@app.route("/japan")
 def japan():
 
     return render_template("japan.html")
 
-@app.route("/norway.html")
+@app.route("/norway")
 def norway():
     return render_template("norway.html")
 
-@app.route("/china.html")
+@app.route("/china")
 def china():
 
     return render_template("china.html")
 
 
-@app.route("/crazy.html")
+@app.route("/crazy")
 def crazy():
     return render_template("crazy.html")
 
