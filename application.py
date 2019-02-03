@@ -4,7 +4,6 @@ import requests
 import sqlite3
 import csv
 
-from cs50 import SQL
 from flask import Flask, flash, redirect, render_template, request, session, url_for
 from flask_session import Session
 from tempfile import mkdtemp
@@ -31,7 +30,7 @@ Session(app)
 
 # Configure CS50 Library to use SQLite database
 conn = sqlite3.connect("info.db", check_same_thread=False)
-db = SQL("sqlite:///info.db")
+
 
 @app.route("/")
 def index():
@@ -43,12 +42,15 @@ def suggestion():
 
     if request.method =="POST":
 
-        db.execute("INSERT INTO markers (what, why, lat, lng, history) VALUES(:what, :why, :lat, :lng, :history)",
-                  what = request.form.get("what"), why = request.form.get("why"), lat = request.form.get("lat1"),
-                  lng = request.form.get("lng1"), history = request.form.get("history"))
-
+        what = request.form.get("what")
+        why = request.form.get("why")
+        lat = request.form.get("lat1")
+        lng = request.form.get("lng1")
+        history = request.form.get("history")
 
         cur = conn.cursor()
+        cur.execute("INSERT INTO markers (what, why, lat, lng, history) VALUES(?, ?, ?, ?, ?)",(what, why, lat, lng, history))
+        conn.commit()
         cur.execute("SELECT what, why, lat, lng, history FROM markers")
         data = cur.fetchall()
 
