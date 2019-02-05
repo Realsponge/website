@@ -1,14 +1,37 @@
+
 {% extends "layout.html" %}
 
-{% block title %}
-    Suggestion
+{% block head %}
+
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <title>Suggestion</title>
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 90%;
+        width: 90%;
+
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        width: 100%;
+        margin: 50;
+        padding: 10;
+      }
+    </style>
 {% endblock %}
 
 {% block main %}
 
 
+    <div id="map" class="container-fluid p-5"></div>
 
-<div id="map" height= "55px" width= "100%"></div>
+
+
+
 
 <form action="/suggestion" method="post" id="form">
     <table>
@@ -29,7 +52,7 @@
         <tr>
             <td>
                 <div class="form-group">
-                    <input autocomplete ="off" class="form-control" name="history" placeholder="Hint on who you are :)" type="text"/>
+                    <input autocomplete ="off" class="form-control" name="history" placeholder="Hint on who you are" type="text"/>
                 </div>
             </td>
        </tr>
@@ -46,31 +69,34 @@
     <input type="hidden" name="lng1" id="lng1">
 </form>
 
-<script>
-    var map;
-    var marker;
-    var infowindow;
-    var messagewindow;
+    <script>
+      var customLabel = {
+        restaurant: {
+          label: 'R'
+        },
+        bar: {
+          label: 'B'
+        }
+      };
 
+        function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: new google.maps.LatLng(23.863276, 40.207977),
+          zoom: 3,
+          gestureHandling: 'greedy',
 
-
-    function initMap() {
-        var california = {lat: 27.4419, lng: 42.1419};
-        map = new google.maps.Map(document.getElementById('map'), {
-          center: california,
-          zoom: 2
         });
         var infoWindow = new google.maps.InfoWindow;
 
+
           // Change this depending on the name of your PHP or XML file
-          downloadUrl('static/marker.xml', function(data) {
+          downloadUrl('static/myData2.xml', function(data) {
             var xml = data.responseXML;
             var markers = xml.documentElement.getElementsByTagName('marker');
             Array.prototype.forEach.call(markers, function(markerElem) {
-              var id = markerElem.getAttribute('id');
-              var name = markerElem.getAsttribute('name');
-              var address = markerElem.getAttribute('address');
-              var type = markerElem.getAttribute('type');
+              var id = markerElem.getAttribute('what');
+              var name = markerElem.getAttribute('why');
+              var address = markerElem.getAttribute('history');
               var point = new google.maps.LatLng(
                   parseFloat(markerElem.getAttribute('lat')),
                   parseFloat(markerElem.getAttribute('lng')));
@@ -84,11 +110,11 @@
               var text = document.createElement('text');
               text.textContent = address
               infowincontent.appendChild(text);
-              var icon = customLabel[type] || {};
+
               var marker = new google.maps.Marker({
                 map: map,
                 position: point,
-                label: icon.label
+
               });
               marker.addListener('click', function() {
                 infoWindow.setContent(infowincontent);
@@ -97,8 +123,7 @@
             });
           });
 
-
-        infowindow = new google.maps.InfoWindow({
+                  infowindow = new google.maps.InfoWindow({
             content: document.getElementById("form")
         });
 
@@ -121,6 +146,8 @@
       });
     }
 
+
+
       function downloadUrl(url, callback) {
         var request = window.ActiveXObject ?
             new ActiveXObject('Microsoft.XMLHTTP') :
@@ -137,6 +164,7 @@
         request.send(null);
       }
 
+
     function saveLocation () {
 
         //marker.getposition ist ein objekt mit zwei keys. lat und lng. diese werden dann aufgerufen mit .lat() und .lng()
@@ -152,11 +180,11 @@
 
 
 
-
-
-</script>
-<script async defer
+      function doNothing() {}
+    </script>
+    <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCQl_vN8s8JxN3muPxqcGY6qpwmtDQr5vU&callback=initMap">
-</script>
+    </script>
+
 
 {% endblock %}

@@ -12,4 +12,12 @@ html, body {
     -webkit-text-size-adjust: 100%;
 }
 
+/* selektiert das dropdownmenu */
+.dropdown-menu {
+    background-color: #8A8989;
+}
 preload{ display: none; }
+
+.navbar {
+    background-color: #742435;
+}
