@@ -30,6 +30,6 @@ preload{ display: none; }
     color: white;
 }
 
-.nav-link {
-    color: blue;
+#description {
+    color: grey;
 }
